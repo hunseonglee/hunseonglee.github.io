@@ -1,4 +1,5 @@
 import { defineCollection, defineConfig, s } from 'velite'
+import rehypePrettyCode from 'rehype-pretty-code'
 
 const posts = defineCollection({
   name: 'Post',
@@ -25,4 +26,15 @@ const posts = defineCollection({
 export default defineConfig({
   root: 'content',
   collections: { posts },
+  markdown: {
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: { light: 'github-light', dark: 'github-dark' },
+          defaultColor: false,
+        },
+      ],
+    ],
+  },
 })
