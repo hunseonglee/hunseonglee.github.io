@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { posts } from '#site/content'
 import { formatDate } from '@/lib/format'
+import { Comments } from '@/components/comments'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -51,6 +52,7 @@ export default async function PostPage({ params }: Props) {
         className="prose prose-neutral max-w-none dark:prose-invert"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+      <Comments />
     </article>
   )
 }
