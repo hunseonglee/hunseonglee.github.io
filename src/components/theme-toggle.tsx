@@ -1,13 +1,14 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // next-themes hydration guard: SSR에서는 resolvedTheme를 알 수 없어 mounted 플래그가 필요
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
