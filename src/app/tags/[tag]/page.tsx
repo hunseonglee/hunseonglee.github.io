@@ -8,7 +8,7 @@ interface Props {
   params: Promise<{ tag: string }>
 }
 
-export function generateStaticParams() {
+export function generateStaticParams(): { tag: string }[] {
   return getAllTags(posts).map(({ tag }) => ({ tag }))
 }
 

@@ -23,7 +23,7 @@ describe('getPublished', () => {
   it('원본 배열을 변경하지 않는다', () => {
     const posts = [make({ slug: 'a', date: '2026-07-01' }), make({ slug: 'b', date: '2026-07-02' })]
     getPublished(posts)
-    expect(posts[0].slug).toBe('a')
+    expect(posts.map((p) => p.slug)).toEqual(['a', 'b'])
   })
 })
 

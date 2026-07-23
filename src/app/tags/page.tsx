@@ -16,7 +16,7 @@ export default function TagsPage() {
         <ul className="flex flex-wrap gap-x-4 gap-y-2">
           {tags.map(({ tag, count }) => (
             <li key={tag}>
-              <Link href={`/tags/${tag}`} className="hover:underline">
+              <Link href={`/tags/${encodeURIComponent(tag)}`} className="hover:underline">
                 #{tag} <span className="text-sm text-neutral-500">({count})</span>
               </Link>
             </li>

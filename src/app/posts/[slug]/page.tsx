@@ -13,7 +13,7 @@ function findPost(slug: string) {
   return posts.find((post) => post.slug === slug && !post.draft)
 }
 
-export function generateStaticParams() {
+export function generateStaticParams(): { slug: string }[] {
   return posts.filter((post) => !post.draft).map((post) => ({ slug: post.slug }))
 }
 
@@ -40,7 +40,7 @@ export default async function PostPage({ params }: Props) {
           <ul className="mt-3 flex flex-wrap gap-2 text-sm">
             {post.tags.map((tag) => (
               <li key={tag}>
-                <Link href={`/tags/${tag}`} className="text-neutral-500 hover:underline">
+                <Link href={`/tags/${encodeURIComponent(tag)}`} className="text-neutral-500 hover:underline">
                   #{tag}
                 </Link>
               </li>

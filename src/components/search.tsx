@@ -27,6 +27,7 @@ export function Search({ items }: { items: SearchItem[] }) {
         onChange={(event) => setQuery(event.target.value)}
         placeholder="제목, 설명, 태그로 검색"
         autoFocus
+        aria-label="검색"
         className="w-full rounded-lg border border-neutral-300 bg-transparent px-4 py-2 outline-none focus:border-neutral-500 dark:border-neutral-700 dark:focus:border-neutral-500"
       />
       {q && (
