@@ -8,7 +8,11 @@ async function config(): Promise<NextConfig> {
     const { build } = await import('velite')
     await build({ watch: isDev, clean: !isDev })
   }
-  return {}
+  return {
+    output: 'export',
+    images: { unoptimized: true },
+    trailingSlash: true,
+  }
 }
 
 export default config()

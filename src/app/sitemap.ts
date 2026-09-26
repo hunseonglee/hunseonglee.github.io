@@ -3,6 +3,8 @@ import { posts } from '#site/content'
 import { site } from '@/config/site'
 import { getAllTags, getPublished } from '@/lib/posts'
 
+export const dynamic = 'force-static'
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = ['', '/tech', '/life', '/tags', '/search', '/about'].map((path) => ({
     url: `${site.url}${path}`,

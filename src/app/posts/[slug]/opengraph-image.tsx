@@ -4,6 +4,7 @@ import { site } from '@/config/site'
 import { formatDate } from '@/lib/format'
 import { ogFonts, OG_SIZE } from '@/lib/og'
 
+export const dynamic = 'force-static'
 export const size = OG_SIZE
 export const contentType = 'image/png'
 export const alt = site.title
