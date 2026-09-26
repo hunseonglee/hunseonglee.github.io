@@ -11,6 +11,11 @@ export interface TagCount {
   count: number
 }
 
+export interface YearGroup<T> {
+  year: number
+  posts: T[]
+}
+
 export function getPublished<T extends PostLike>(posts: T[]): T[] {
   return posts
     .filter((post) => !post.draft)
@@ -26,6 +31,20 @@ export function getByCategory<T extends PostLike>(
 
 export function getByTag<T extends PostLike>(posts: T[], tag: string): T[] {
   return getPublished(posts).filter((post) => post.tags.includes(tag))
+}
+
+/** published 글을 연도별로 묶는다. 최신 연도부터, 연도 안에서도 최신순(getPublished 기준). */
+export function groupByYear<T extends PostLike>(posts: T[]): YearGroup<T>[] {
+  const groups = new Map<number, T[]>()
+  for (const post of getPublished(posts)) {
+    const year = new Date(post.date).getUTCFullYear()
+    const bucket = groups.get(year)
+    if (bucket) bucket.push(post)
+    else groups.set(year, [post])
+  }
+  return [...groups.entries()]
+    .sort((a, b) => b[0] - a[0])
+    .map(([year, posts]) => ({ year, posts }))
 }
 
 export function getAllTags(posts: PostLike[]): TagCount[] {

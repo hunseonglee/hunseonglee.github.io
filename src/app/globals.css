@@ -4,27 +4,143 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* 모노스페이스 도큐먼트 톤 — 홈·아카이브·헤더의 정체성. 본문(prose)만 읽기 폰트로 분리 */
 @theme {
-  --font-sans: 'Pretendard Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas,
+    'Apple SD Gothic Neo', monospace;
+  --font-reading: 'Pretendard Variable', -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', system-ui, sans-serif;
+  --color-paper: #fbfbfa;
+  --color-ink: #1a1a1a;
+  --color-meta: #a0a0a0;
+  --color-line: #e6e6e4;
+  --color-cat: #a8a8a8;
+}
+
+.dark {
+  --color-paper: #141414;
+  --color-ink: #e6e6e4;
+  --color-meta: #7a7a7a;
+  --color-line: #2a2a2a;
+  --color-cat: #7a7a7a;
 }
 
 body {
-  @apply bg-white font-sans text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100;
+  @apply bg-paper font-sans text-ink;
 }
 
-/* rehype-pretty-code 듀얼 테마: 라이트/다크 전환 */
-code[data-theme*=' '],
-code[data-theme*=' '] span {
-  color: var(--shiki-light);
+.font-reading {
+  font-family: var(--font-reading);
+}
+
+/* ── 본문 읽기 타이포 (Pretendard 산세리프) ── */
+.prose {
+  font-family: var(--font-reading);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #26251f;
+}
+.dark .prose {
+  color: #d8d7d1;
+}
+.prose :where(h1, h2, h3, h4) {
+  font-family: var(--font-reading);
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+.prose :where(h2) {
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.32rem;
+}
+.prose :where(h3) {
+  font-size: 1.12rem;
+}
+.prose :where(a) {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-line);
+}
+.prose :where(a):hover {
+  text-decoration-color: currentColor;
+}
+
+/* 인용구 */
+.prose :where(blockquote) {
+  border-left: 2px solid var(--color-line);
+  padding-left: 1.1rem;
+  margin: 1.4rem 0;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--color-meta);
+}
+.prose :where(blockquote p:first-of-type)::before,
+.prose :where(blockquote p:last-of-type)::after {
+  content: none; /* 기본 따옴표 제거 */
+}
+
+/* 표 */
+.prose :where(table) {
+  font-size: 0.9rem;
+}
+.prose :where(thead th) {
+  border-bottom: 2px solid var(--color-ink);
+}
+.prose :where(td, th) {
+  border-color: var(--color-line);
+  padding: 0.5rem 0.65rem;
+}
+
+/* 인라인 코드 & 코드블록은 모노 유지 */
+.prose :where(code):not(pre code) {
+  font-family: var(--font-sans);
+  font-size: 0.86em;
+  background: color-mix(in srgb, var(--color-ink) 7%, transparent);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  font-weight: 400;
+}
+.prose :where(code):not(pre code)::before,
+.prose :where(code):not(pre code)::after {
+  content: none;
+}
+.prose :where(pre),
+[data-rehype-pretty-code-figure] pre {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  padding: 0.9rem 1.1rem;
+  /* shiki가 pre에 심어둔 배경 변수 사용 (prose 기본 어두운 배경 덮어씀) */
   background-color: var(--shiki-light-bg);
 }
-
-.dark code[data-theme*=' '],
-.dark code[data-theme*=' '] span {
-  color: var(--shiki-dark);
+.dark .prose :where(pre),
+.dark [data-rehype-pretty-code-figure] pre {
   background-color: var(--shiki-dark-bg);
 }
 
-[data-rehype-pretty-code-figure] pre {
-  @apply overflow-x-auto rounded-lg border border-neutral-200 p-4 dark:border-neutral-800;
+/* rehype-pretty-code 듀얼 테마: 색상만 전환 (배경은 pre가 담당) */
+code[data-theme*=' '],
+code[data-theme*=' '] span {
+  color: var(--shiki-light);
+}
+.dark code[data-theme*=' '],
+.dark code[data-theme*=' '] span {
+  color: var(--shiki-dark);
+}
+
+/* ── Mermaid 다이어그램 ── */
+.prose pre.mermaid {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: center;
+  overflow-x: auto;
+}
+/* 렌더 전 원본 텍스트가 잠깐 보이는 것 방지 */
+.prose pre.mermaid:not([data-processed='true']) {
+  visibility: hidden;
 }

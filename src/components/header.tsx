@@ -12,18 +12,14 @@ const nav = [
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between py-6">
-      <Link href="/" className="font-bold">
+    <header className="flex items-center justify-between border-b border-line py-6">
+      <Link href="/" className="font-semibold">
         {site.title}
       </Link>
-      <div className="flex items-center gap-1">
-        <nav className="flex gap-1 text-sm">
+      <div className="flex items-center gap-3">
+        <nav className="flex gap-3 text-sm text-meta">
           {nav.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="rounded-md px-2 py-1.5 text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
-            >
+            <Link key={href} href={href} className="hover:text-ink">
               {label}
             </Link>
           ))}

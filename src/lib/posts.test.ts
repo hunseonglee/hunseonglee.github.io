@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { getAllTags, getByCategory, getByTag, getPublished, type PostLike } from './posts'
+import {
+  getAllTags,
+  getByCategory,
+  getByTag,
+  getPublished,
+  groupByYear,
+  type PostLike,
+} from './posts'
 
 const make = (over: Partial<PostLike>): PostLike => ({
   slug: 'post',
@@ -46,6 +53,21 @@ describe('getByTag', () => {
       make({ slug: 'c', tags: ['nextjs'], draft: true }),
     ]
     expect(getByTag(posts, 'nextjs').map((p) => p.slug)).toEqual(['a'])
+  })
+})
+
+describe('groupByYear', () => {
+  it('draft를 빼고 최신 연도부터, 연도 안에서도 최신순으로 묶는다', () => {
+    const posts = [
+      make({ slug: 'a', date: '2025-03-01' }),
+      make({ slug: 'b', date: '2026-07-10' }),
+      make({ slug: 'c', date: '2026-07-12' }),
+      make({ slug: 'hidden', date: '2025-11-03', draft: true }),
+    ]
+    const groups = groupByYear(posts)
+    expect(groups.map((g) => g.year)).toEqual([2026, 2025])
+    expect(groups[0].posts.map((p) => p.slug)).toEqual(['c', 'b'])
+    expect(groups[1].posts.map((p) => p.slug)).toEqual(['a'])
   })
 })
 

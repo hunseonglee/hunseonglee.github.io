@@ -28,18 +28,18 @@ export function Search({ items }: { items: SearchItem[] }) {
         placeholder="제목, 설명, 태그로 검색"
         autoFocus
         aria-label="검색"
-        className="w-full rounded-lg border border-neutral-300 bg-transparent px-4 py-2 outline-none focus:border-neutral-500 dark:border-neutral-700 dark:focus:border-neutral-500"
+        className="w-full border border-line bg-transparent px-4 py-2 outline-none focus:border-meta"
       />
       {q && (
         <ul className="mt-6 space-y-4">
-          {results.length === 0 && <li className="text-neutral-500">검색 결과가 없습니다.</li>}
+          {results.length === 0 && <li className="text-meta">검색 결과가 없습니다.</li>}
           {results.map((item) => (
             <li key={item.permalink}>
-              <Link href={item.permalink} className="font-medium hover:underline">
+              <Link href={item.permalink} className="font-reading font-medium hover:underline">
                 {item.title}
               </Link>
               {item.description && (
-                <p className="mt-0.5 text-sm text-neutral-500">{item.description}</p>
+                <p className="mt-0.5 text-sm text-meta">{item.description}</p>
               )}
             </li>
           ))}

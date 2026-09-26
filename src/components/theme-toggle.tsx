@@ -13,16 +13,16 @@ export function ThemeToggle() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return <span className="inline-block h-8 w-8" />
+  if (!mounted) return <span className="inline-block h-6 w-6" />
 
   return (
     <button
       type="button"
       aria-label="테마 전환"
-      className="h-8 w-8 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800"
+      className="h-6 w-6 text-meta hover:text-ink"
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
     >
-      {resolvedTheme === 'dark' ? '🌙' : '☀️'}
+      {resolvedTheme === 'dark' ? '☾' : '☀'}
     </button>
   )
 }
