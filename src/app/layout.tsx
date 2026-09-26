@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     title: site.title,
     description: site.description,
   },
+  ...(site.googleSiteVerification
+    ? { verification: { google: site.googleSiteVerification } }
+    : {}),
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
