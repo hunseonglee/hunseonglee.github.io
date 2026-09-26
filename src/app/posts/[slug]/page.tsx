@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description,
+    alternates: { canonical: post.permalink },
     openGraph: {
       type: 'article',
       title: post.title,
@@ -48,8 +49,29 @@ export default async function PostPage({ params }: Props) {
   const post = findPost(slug)
   if (!post) notFound()
 
+  const url = `${site.url}${post.permalink}`
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description ?? site.description,
+    datePublished: new Date(post.date).toISOString(),
+    dateModified: new Date(post.date).toISOString(),
+    author: { '@type': 'Person', name: site.author, url: site.url },
+    publisher: { '@type': 'Person', name: site.author, url: site.url },
+    mainEntityOfPage: url,
+    url,
+    image: `${url}/opengraph-image`,
+    inLanguage: 'ko-KR',
+    ...(post.tags.length > 0 ? { keywords: post.tags.join(', ') } : {}),
+  }
+
   return (
     <article>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <header className="mb-10">
         <h1 className="font-reading text-2xl font-bold">{post.title}</h1>
         <p className="mt-2 text-sm text-meta">
