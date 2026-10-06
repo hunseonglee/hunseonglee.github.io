@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.sddt.sugoi",
+      "sha256_cert_fingerprints": [
+        "27:E4:5D:EA:8A:7A:35:95:39:41:0D:23:46:E0:F8:CE:7F:7C:5D:70:20:D9:47:D7:8A:80:83:BF:8C:9E:DE:FC"
+      ]
+    }
+  }
+]

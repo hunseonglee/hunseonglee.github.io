@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sugoi invite</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="You're invited to share a home in Sugoi.">
+<style>
+  :root {
+    --bg: #FFF8EF; --card: #FFFFFF; --fg: #2A211B; --muted: #8C7F74;
+    --primary: #FF7A45; --honey: #FFC23D; --on-primary: #FFFFFF; --line: #F1E4D6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17130F; --card: #241E18; --fg: #F7EFE6; --muted: #A89A8D; --line: #3A3028;
+    }
+  }
+  :root[data-theme="dark"] { --bg: #17130F; --card: #241E18; --fg: #F7EFE6; --muted: #A89A8D; --line: #3A3028; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 24px 16px; background: var(--bg); color: var(--fg);
+    font: 17px/1.5 ui-rounded, "SF Pro Rounded", -apple-system, system-ui, "Apple SD Gothic Neo", "Hiragino Sans", sans-serif;
+  }
+  main {
+    width: 100%; max-width: 420px; background: var(--card); border-radius: 20px; padding: 28px 22px;
+    text-align: center; box-shadow: 0 6px 24px rgba(42, 33, 27, .08);
+  }
+  .mark { font-size: 52px; line-height: 1; }
+  h1 { font-size: 22px; line-height: 1.3; margin: 14px 0 6px; }
+  p { margin: 6px 0; color: var(--muted); }
+  ol { text-align: left; color: var(--fg); padding-left: 22px; margin: 18px 0; }
+  ol li { margin: 6px 0; }
+  .code {
+    font: 700 36px/1.2 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .14em; color: var(--primary);
+    margin: 10px 0 4px; padding: 10px 0; border: 2px dashed var(--honey); border-radius: 16px; user-select: all;
+  }
+  .btn {
+    display: block; width: 100%; margin: 10px 0 0; padding: 14px 18px; border-radius: 16px; border: 0;
+    background: var(--primary); color: var(--on-primary); text-decoration: none; font: inherit; font-weight: 700;
+    cursor: pointer;
+  }
+  .btn.secondary { background: transparent; color: var(--fg); border: 1.5px solid var(--line); font-weight: 600; }
+  .stores { display: flex; gap: 10px; }
+  .stores .btn { flex: 1; }
+  .hint { font-size: 14px; margin-top: 14px; }
+  .missing .code, .missing #open, .missing #copy { display: none; }
+</style>
+</head>
+<body>
+<main id="root">
+  <div class="mark" aria-hidden="true">🏠🙌</div>
+  <h1 id="title">You're invited to share a home in Sugoi</h1>
+  <p id="lead">Log chores in one tap and say thanks to each other.</p>
+  <div class="code" id="code" aria-label="Invite code">······</div>
+  <p id="valid">The code works for 7 days.</p>
+  <a class="btn" id="open" href="#">Open in Sugoi</a>
+  <button class="btn secondary" id="copy" type="button">Copy code</button>
+  <ol>
+    <li id="s1">Install Sugoi.</li>
+    <li id="s2">Open Household → “I have an invite code”.</li>
+    <li id="s3">Enter the code above.</li>
+  </ol>
+  <div class="stores">
+    <a class="btn secondary" id="ios" href="https://apps.apple.com/app/id6818944406">App Store</a>
+    <a class="btn secondary" id="play" href="https://play.google.com/store/apps/details?id=com.sddt.sugoi">Google Play</a>
+  </div>
+  <p class="hint" id="nocode" hidden>Ask the person who invited you for their 6-character code.</p>
+</main>
+<script>
+  (function () {
+    var T = {
+      en: {
+        title: "You're invited to share a home in Sugoi",
+        lead: "Log chores in one tap and say thanks to each other.",
+        valid: "The code works for 7 days.", open: "Open in Sugoi", copy: "Copy code", copied: "Copied!",
+        s1: "Install Sugoi.", s2: "Open Household → “I have an invite code”.", s3: "Enter the code above.",
+        nocode: "Ask the person who invited you for their 6-character code."
+      },
+      ko: {
+        title: "수고이에서 함께 사는 집에 초대받았어요",
+        lead: "집안일은 한 번에 기록하고, 서로에게 “수고했어”를 전해요.",
+        valid: "코드는 7일 동안 유효해요.", open: "수고이에서 열기", copy: "코드 복사", copied: "복사했어요!",
+        s1: "수고이를 설치하세요.", s2: "‘우리 집’ → “초대 코드가 있어요”를 누르세요.", s3: "위 코드를 입력하세요.",
+        nocode: "초대한 사람에게 6자리 코드를 물어보세요."
+      },
+      ja: {
+        title: "スゴイで一緒に暮らす家に招待されました",
+        lead: "家事はワンタップで記録、おたがいに「ありがとう」を。",
+        valid: "コードの有効期限は7日間です。", open: "スゴイで開く", copy: "コードをコピー", copied: "コピーしました!",
+        s1: "スゴイをインストールします。", s2: "「おうち」→「招待コードを持っています」をタップ。", s3: "上のコードを入力します。",
+        nocode: "招待してくれた人に6文字のコードを聞いてください。"
+      }
+    };
+    var q = new URLSearchParams(location.search);
+    var lang = (q.get("hl") || navigator.language || "en").slice(0, 2).toLowerCase();
+    var t = T[lang] || T.en;
+    document.documentElement.lang = T[lang] ? lang : "en";
+    ["title", "lead", "valid", "open", "copy", "s1", "s2", "s3", "nocode"].forEach(function (k) {
+      document.getElementById(k).textContent = t[k];
+    });
+    if (lang === "ko") document.title = "수고이 초대";
+    if (lang === "ja") document.title = "スゴイの招待";
+
+    // ?c=<CODE> (also accepts a trailing path segment /i/sugoi/<CODE> when served as 404.html)
+    var m = location.pathname.match(/\/i\/sugoi\/([0-9A-Za-z-]{6,7})\/?$/);
+    var raw = q.get("c") || (m ? m[1] : "");
+    var c = raw.toUpperCase().replace(/[\s-]/g, "").replace(/O/g, "0").replace(/[IL]/g, "1");
+    if (/^[0-9A-HJKMNP-TV-Z]{6}$/.test(c)) {
+      document.getElementById("code").textContent = c.slice(0, 3) + "-" + c.slice(3);
+      document.getElementById("open").href = "sugoi://join/" + c;
+      var play = document.getElementById("play");
+      play.href += "&referrer=" + encodeURIComponent("code=" + c);
+      document.getElementById("copy").addEventListener("click", function () {
+        var b = this;
+        try {
+          navigator.clipboard.writeText(c).then(function () { b.textContent = t.copied; });
+        } catch (e) { /* clipboard unavailable: the code is selectable */ }
+      });
+    } else {
+      document.getElementById("root").className = "missing";
+      document.getElementById("valid").hidden = true;
+      document.getElementById("nocode").hidden = false;
+    }
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["9G3F6Z6HGS.com.sddt.sugoi"],
+        "components": [
+          { "/": "/i/sugoi/*", "comment": "Sugoi invite links: https://hunseonglee.github.io/i/sugoi/?c=<CODE>" }
+        ]
+      }
+    ]
+  }
+}
