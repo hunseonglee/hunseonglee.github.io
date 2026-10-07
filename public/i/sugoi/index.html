@@ -86,10 +86,10 @@
         nocode: "초대한 사람에게 6자리 코드를 물어보세요."
       },
       ja: {
-        title: "スゴイで一緒に暮らす家に招待されました",
+        title: "スゴイスゴイで一緒に暮らす家に招待されました",
         lead: "家事はワンタップで記録、おたがいに「ありがとう」を。",
-        valid: "コードの有効期限は7日間です。", open: "スゴイで開く", copy: "コードをコピー", copied: "コピーしました!",
-        s1: "スゴイをインストールします。", s2: "「おうち」→「招待コードを持っています」をタップ。", s3: "上のコードを入力します。",
+        valid: "コードの有効期限は7日間です。", open: "スゴイスゴイで開く", copy: "コードをコピー", copied: "コピーしました!",
+        s1: "スゴイスゴイをインストールします。", s2: "「おうち」→「招待コードを持っています」をタップ。", s3: "上のコードを入力します。",
         nocode: "招待してくれた人に6文字のコードを聞いてください。"
       }
     };
@@ -101,7 +101,7 @@
       document.getElementById(k).textContent = t[k];
     });
     if (lang === "ko") document.title = "수고이 초대";
-    if (lang === "ja") document.title = "スゴイの招待";
+    if (lang === "ja") document.title = "スゴイスゴイの招待";
 
     // ?c=<CODE> (also accepts a trailing path segment /i/sugoi/<CODE> when served as 404.html)
     var m = location.pathname.match(/\/i\/sugoi\/([0-9A-Za-z-]{6,7})\/?$/);
